@@ -271,13 +271,23 @@ background-color: rgba(244, 236, 254, 0.50);
 display: none;
 }
 .Label  ul.Submenu li:hover .Hovericon{
-position: relative;
-right: 12px;
+
 display: inline-block;
 }
-.Label  ul.Submenu li:hover .Hovericon svg{
+.Label  ul.Submenu li .Hovericon svg{
 width: 24px;
 }
-.Label  ul.Submenu li:hover .Hovericon svg:first-child{
+.Label  ul.Submenu li .Hovericon svg:first-child{
 margin-right: 4px;
 }
+.InactiveItemText{
+  color: #999;
+}
+ .ActiveItemText{
+  color: #22222B;
+}
+.Label  ul.Submenu .Hovericon.Active{
+  display: inline-block;
+  position: relative;
+  }
+

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { EyeIcon, EyeClose, Arrowdown, Arrowup, Folder, SmallClean, LockOpen } from './Icons';
+import { EyeIcon, EyeClose, Arrowdown, Arrowup, Folder, SmallClean, LockOpen, LockIcon } from './Icons';
 
 const Labelpice = ["부품1", "부품2", "부품3", "부품4", "부품5", "부품6", "부품7", "부품8", "부품9", "부품10", "부품11", "부품12", "부품13", "부품14", "부품15", "부품16", "부품17", "부품18", "부품19", "부품20", "부품21"];
 const Labeldamage = ["손상1", "손상2", "손상3", "손상4", "손상5"];
-
 
 function Label() {
   const [isSubMenuOpen, setSubMenuOpen] = useState(true);
   const [isDamageSubMenuOpen, setDamageSubMenuOpen] = useState(false);
   const [eyeIconStatus, setEyeIconStatus] = useState({});
+  const [allPiceEyeIconsActive, setAllPiceEyeIconsActive] = useState(false);
+  const [damageEyeIconsActive, setdamageEyeIconsActive] = useState(false);
+  const [lockOpenStatus, setLockOpenStatus] = useState({});
+  const [hoverIconActive, setHoverIconActive] = useState(false);
 
   const toggleSubMenu = () => {
     setSubMenuOpen(!isSubMenuOpen);
@@ -23,18 +26,51 @@ function Label() {
     setEyeIconStatus((prevStatus) => ({ ...prevStatus, [key]: !prevStatus[key] }));
   };
 
+  const toggleAllPiceEyeIcons = () => {
+    setAllPiceEyeIconsActive((prev) => !prev);
+    setEyeIconStatus((prevStatus) => {
+      const updatedStatus = {};
+      Labelpice.forEach((_, i) => {
+        updatedStatus[`pice${i}`] = !allPiceEyeIconsActive;
+      });
+      return { ...prevStatus, ...updatedStatus };
+    });
+  };
+
+  const damageEyeIcons = () => {
+    setdamageEyeIconsActive((prev) => !prev);
+    setEyeIconStatus((prevStatus) => {
+      const updatedStatus = {};
+      Labeldamage.forEach((_, i) => {
+        updatedStatus[`damage${i}`] = !damageEyeIconsActive;
+      });
+      return { ...prevStatus, ...updatedStatus };
+    });
+  };
+
+  const toggleLock = (index, isDamage) => {
+    setLockOpenStatus((prevStatus) => ({
+      ...prevStatus,
+      [isDamage ? `damage${index}` : `pice${index}`]: !prevStatus[isDamage ? `damage${index}` : `pice${index}`],
+    }));
+  };
+  const handleHoverIconClick = (index, isDamage) => {
+    setHoverIconActive((prev) => ({
+      ...prev,
+      [isDamage ? `damage${index}` : `pice${index}`]: !prev[isDamage ? `damage${index}` : `pice${index}`],
+    }));
+    toggleLock(index, isDamage);
+  };
+
   return (
     <div className="Label">
       <h4 className={isSubMenuOpen ? "ActiveLabel" : ""}>Label</h4>
       <div className="Labeltag">
         <ul className="Menu">
-          <li >
+          <li>
             <div>
-            <span
-              className={`Eyeicon ${eyeIconStatus.pice0 ? "ActiveEyeIcon" : ""}`}
-              onClick={() => toggleEyeIcon(0, false)}
-              >
-              {eyeIconStatus.pice0 ? <EyeClose /> : <EyeIcon />}
+              <span className={`EyeIcon ${allPiceEyeIconsActive ? "ActiveEyeIcon" : ""}`} onClick={toggleAllPiceEyeIcons}>
+                {allPiceEyeIconsActive ? <EyeClose /> : <EyeIcon />}
               </span>
               <span className="Foldericon"><Folder /></span>
               부품({Labelpice.length})
@@ -54,29 +90,39 @@ function Label() {
                     >
                       {eyeIconStatus[`pice${index}`] ? <EyeClose /> : <EyeIcon />}
                     </span>
-                    {item}(1)
+
+                    <span
+                      className={`ItemText ${eyeIconStatus[`pice${index}`] ? "InactiveItemText" : "ActiveItemText"}`}
+                    >
+                      {item}(1)
+                    </span>
+
                   </div>
-                  <div> <span className="Hovericon"><SmallClean /><LockOpen /></span></div>
+                  <div>
+                  <span className='Hovericon'>  <SmallClean/></span>
+                  <span
+                      className={`Hovericon ${hoverIconActive[`pice${index}`] ? "Active" : ""}`}
+                      onClick={() => handleHoverIconClick(index, false)}
+                    >
+                       {lockOpenStatus[`pice${index}`] ?  <LockIcon /> :  <LockOpen />}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>
           )}
 
-          <li >
+          <li>
             <div>
-              <span
-                className={`Eyeicon ${isDamageSubMenuOpen ? "ActiveEyeIcon" : ""}`}
-                onClick={() => toggleEyeIcon(0, true)}
-              >
-                {eyeIconStatus.damage0 ? <EyeClose /> : <EyeIcon />}
+              <span className={`EyeIcon ${damageEyeIconsActive ? "ActiveEyeIcon" : ""}`} onClick={damageEyeIcons}>
+                {damageEyeIconsActive ? <EyeClose /> : <EyeIcon />}
               </span>
-              <span className="Foldericon"><Folder /></span>
               손상({Labeldamage.length})
             </div>
             <div>
               <span className="Arrowicon" onClick={toggleDamageSubMenu}>{isDamageSubMenuOpen ? <Arrowup /> : <Arrowdown />} </span>
             </div>
-          </li> 
+          </li>
           {isDamageSubMenuOpen && (
             <ul className="Submenu">
               {Labeldamage.map((item, index) => (
@@ -88,9 +134,15 @@ function Label() {
                     >
                       {eyeIconStatus[`damage${index}`] ? <EyeClose /> : <EyeIcon />}
                     </span>
-                    {item}(1)
+                    <span
+                      className={`ItemText ${eyeIconStatus[`damage${index}`] ? "InactiveItemText" : "ActiveItemText"}`}
+                    >
+                      {item}(1)
+                    </span>
                   </div>
-                  <div> <span className="Hovericon"><SmallClean /><LockOpen /></span></div>
+                  <div>
+                 
+                  </div>
                 </li>
               ))}
             </ul>

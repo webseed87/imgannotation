@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { PrveIcon, NextIcon } from './Icons';
 import 'swiper/css'; 
 
+
+
 const Showcase = () => {
   const [swiper, setSwiper] = useState(null);
   const [mainImageIndex, setMainImageIndex] = useState(0);
@@ -61,5 +63,7 @@ function Workcanvas() {
     </div>
   );
 }
+
+
 
 export default Workcanvas;

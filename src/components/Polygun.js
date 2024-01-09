@@ -1,19 +1,14 @@
-import React, { useState, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { PrveIcon, NextIcon } from './Icons';
-import 'swiper/css'; 
+import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Head from "next/head";
 
-
-
-const Showcase = ({ selectedTool }) => {
+export default function Annotate() {
   const [polygons, setPolygons] = useState([]);
   const [selectedObject, setSelectedObject] = useState(null);
   const backgroundRef = useRef();
   const image = useRef();
 
   function startDraw(e) {
-    if (selectedTool === "polygon") {
     const { x, y } = backgroundRef.current.getBoundingClientRect();
     console.log('Image size:', image.current.naturalWidth, 'x', image.current.naturalHeight);
 
@@ -40,7 +35,6 @@ const Showcase = ({ selectedTool }) => {
       };
       setPolygons((polygons) => [...polygons, object]);
     }
-  }
   }
 
   function getCoordinates(e) {
@@ -75,53 +69,23 @@ const Showcase = ({ selectedTool }) => {
       .replaceAll("/", ",");
     return positionString;
   }
-  const [swiper, setSwiper] = useState(null);
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-
-  const navigationPrevRef = useRef(null);
-  const navigationNextRef = useRef(null);
-
-  const handlePrevClick = () => {
-    if (swiper) {
-      swiper.slidePrev();
-    }
-  };
-
-  const handleNextClick = () => {
-    if (swiper) {
-      swiper.slideNext();
-    }
-  };
-
-  const swiperParams = {
-    slidesPerView: 1, 
-    onSwiper: setSwiper,
-    onSlideChange: (e) => setMainImageIndex(e.activeIndex),
-    modules: {
-      scrollbar: {
-        draggable: false,
-      },
-    },
-    simulateTouch: false, 
-    noSwiping: true, 
-    noSwipingClass: 'swiper-no-swiping', 
-  };
-  const totalSlides = swiper ? swiper.slides.length : 0;
 
   return (
-
     <div>
-      <Swiper {...swiperParams}
-          onBeforeInit={(swiper) => {
-            swiper.params.simulateTouch = false;
-            swiper.params.touchEventsTarget = 'wrapper';
-            swiper.touchEventsData.stop = true;
-          }}
-      >
-        <SwiperSlide>
-        <div className="box" ref={backgroundRef} onClick={startDraw}>
-          <img src={process.env.PUBLIC_URL + '/caraccident01.jpg'} ref={image}/> 
-          <svg className="svg">
+      <Head>
+        <title>Image Annotation</title>
+        <meta name="description" content="Image Annotation" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="container">
+        <div>
+          <div className="box" ref={backgroundRef} onClick={startDraw}>
+            <img
+             src={process.env.PUBLIC_URL + '/caraccident01.jpg'}
+              alt="Image to annotate"
+              ref={image}
+            />
+            <svg className="svg">
               {image.current && (
              <rect
              x="0"
@@ -144,22 +108,34 @@ const Showcase = ({ selectedTool }) => {
                 })}
               </g>
             </svg>
-         
+          </div>
+          {selectedObject != null ? (
+            <button onClick={finishAnnotation}>Finish Annotation</button>
+          ) : (
+            <button onClick={newAnnotation}>New Annotation</button>
+          )}
         </div>
-        </SwiperSlide>
-        <SwiperSlide><img src={process.env.PUBLIC_URL + '/caraccident02.jpg'} /> </SwiperSlide>
-
-      </Swiper>
-      <div className="Pagenavigation">
-      <div onClick={handlePrevClick} ref={navigationPrevRef}>
-        <PrveIcon />
-      </div>
-      <div className="SlideCounter">
-          {mainImageIndex + 1} / {totalSlides}
+        <div className="panel">
+          {polygons.map((item) => {
+            return (
+              <div className="object" key={item.id}>
+                <span>Object ID: {item.id}</span>
+                <button onClick={() => deleteAnnotation(item.id)}>
+                  Delete Object
+                </button>
+                <div className="data">
+                  {item.data.map((item, index) => {
+                    return (
+                      <span key={index}>
+                        X: {item.x}, Y: {item.y}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
         </div>
-      <div onClick={handleNextClick} ref={navigationNextRef}>
-        <NextIcon />
-      </div>
       </div>
       <style jsx>
         {`
@@ -228,21 +204,5 @@ const Showcase = ({ selectedTool }) => {
         `}
       </style>
     </div>
-    
-  );
-};
-
-function Workcanvas({ selectedTool }) {
-  return (
-    <div className="Workcanvas">
-      <h4>food_20230123.png</h4>
-      <div className="canvas">
-        <Showcase selectedTool={selectedTool}/>
-      </div>
-    </div>
   );
 }
-
-
-
-export default Workcanvas;

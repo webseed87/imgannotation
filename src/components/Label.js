@@ -73,7 +73,7 @@ function Label() {
                 {allPiceEyeIconsActive ? <EyeClose /> : <EyeIcon />}
               </span>
               <span className="Foldericon"><Folder /></span>
-              부품({Labelpice.length})
+              {Labelpice && Labelpice.length && <p>부품({Labelpice.length})</p>}
             </div>
             <div>
               <span className="Arrowicon" onClick={toggleSubMenu}>{isSubMenuOpen ? <Arrowup /> : <Arrowdown />} </span>

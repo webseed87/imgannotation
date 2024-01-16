@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {SaveIcon} from './Icons';
+import {SaveIcon} from '../Common/Icons';
 
 const userName = ["Hyunwoo Hong", "Jiyeong Kim", "Sejin Pack"];
 const dateOptions = [

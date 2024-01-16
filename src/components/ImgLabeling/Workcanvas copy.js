@@ -17,6 +17,7 @@ const Showcase = ({ selectedTool }) => {
   const [history, setHistory] = useState([]);
   const [redoHistory, setRedoHistory] = useState([]);
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [selectedPoint, setSelectedPoint] = useState(null);
 
 
   function handleLabelChange(polygonId, newLabel) {
@@ -32,16 +33,31 @@ const Showcase = ({ selectedTool }) => {
     }
   
     setIsMouseDown(true);
-  
     const { x, y } = backgroundRef.current.getBoundingClientRect();
     const { clickPositionX, clickPositionY } = getCoordinates(e, x, y);
-  
+
     const position = polygons.findIndex((object) => object.id === selectedObject);
-  
+
     if (position !== -1) {
       const items = [...polygons];
       const item = { ...items[position] };
-      item.data.push({ x: clickPositionX, y: clickPositionY });
+
+      // Check if the click is on an existing point
+      const clickedPointIndex = item.data.findIndex((point) => {
+        const distance = Math.sqrt(
+          Math.pow(point.x - clickPositionX, 2) + Math.pow(point.y - clickPositionY, 2)
+        );
+        return distance < 10; // You can adjust this threshold as needed
+      });
+
+      if (clickedPointIndex !== -1) {
+        // If a point is clicked, set it as the selected point
+        setSelectedPoint({ polygonIndex: position, pointIndex: clickedPointIndex });
+      } else {
+        // If no point is clicked, add a new point
+        item.data.push({ x: clickPositionX, y: clickPositionY });
+      }
+
       items[position] = item;
       setPolygons(items);
       setHistory((prevHistory) => [...prevHistory, items]);
@@ -63,12 +79,26 @@ const Showcase = ({ selectedTool }) => {
   
   function handleMouseMove(e) {
     if (isMouseDown && selectedTool === 'polygon') {
-      console.log('Dragging:', e.clientX, e.clientY);
-      // 여기에서 클릭한 상태에서 드래그 중인 동안의 작업 수행
+      if (selectedPoint !== null) {
+        // If a point is selected, update its position
+        const { x, y } = backgroundRef.current.getBoundingClientRect();
+        const { clickPositionX, clickPositionY } = getCoordinates(e, x, y);
+
+        const items = [...polygons];
+        const item = { ...items[selectedPoint.polygonIndex] };
+        item.data[selectedPoint.pointIndex] = { x: clickPositionX, y: clickPositionY };
+        items[selectedPoint.polygonIndex] = item;
+        setPolygons(items);
+      } else {
+        console.log('Dragging:', e.clientX, e.clientY);
+        // 여기에서 클릭한 상태에서 드래그 중인 동안의 작업 수행
+      }
     }
   }
+
   function handleMouseUp() {
     setIsMouseDown(false);
+    setSelectedPoint(null); 
   }
   function getCoordinates(e, offsetX = 0, offsetY = 0) {
     const { clientX, clientY } = e;

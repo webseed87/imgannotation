@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { PrveIcon, NextIcon } from './Icons';
+import { PrveIcon, NextIcon } from '../Common/Icons';
 import 'swiper/css';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,6 +9,7 @@ const Labelpice = ["부품1", "부품2", "부품3", "부품4", "부품5", "부�
 
 const Showcase = ({ selectedTool }) => {
   const [polygons, setPolygons] = useState([]);
+  const [rectangles, setRectangles] = useState([]); // Add rectangles state
   const [selectedObject, setSelectedObject] = useState(null);
   const backgroundRef = useRef();
   const image = useRef();
@@ -28,53 +29,86 @@ const Showcase = ({ selectedTool }) => {
     );
   }
   function startDraw(e) {
-    if (selectedTool !== 'polygon') {
-      return;
-    }
+
+    if (selectedTool == 'polygon' ) {
+      setIsMouseDown(true);
+      const { x, y } = backgroundRef.current.getBoundingClientRect();
+      const { clickPositionX, clickPositionY } = getCoordinates(e, x, y);
   
-    setIsMouseDown(true);
-    const { x, y } = backgroundRef.current.getBoundingClientRect();
-    const { clickPositionX, clickPositionY } = getCoordinates(e, x, y);
-
-    const position = polygons.findIndex((object) => object.id === selectedObject);
-
-    if (position !== -1) {
-      const items = [...polygons];
-      const item = { ...items[position] };
-
-      // Check if the click is on an existing point
-      const clickedPointIndex = item.data.findIndex((point) => {
-        const distance = Math.sqrt(
-          Math.pow(point.x - clickPositionX, 2) + Math.pow(point.y - clickPositionY, 2)
-        );
-        return distance < 5; // You can adjust this threshold as needed
-      });
-
-      if (clickedPointIndex !== -1) {
-        // If a point is clicked, set it as the selected point
-        setSelectedPoint({ polygonIndex: position, pointIndex: clickedPointIndex });
+      const position = polygons.findIndex((object) => object.id === selectedObject);
+  
+      if (position !== -1) {
+        const items = [...polygons];
+        const item = { ...items[position] };
+        const clickedPointIndex = item.data.findIndex((point) => {
+          const distance = Math.sqrt(
+            Math.pow(point.x - clickPositionX, 2) + Math.pow(point.y - clickPositionY, 2)
+          );
+          return distance < 10; // You can adjust this threshold as needed
+        });
+  
+        if (clickedPointIndex !== -1) {
+          setSelectedPoint({ polygonIndex: position, pointIndex: clickedPointIndex });
+        } else {
+          item.data.push({ x: clickPositionX, y: clickPositionY });
+        }
+  
+        items[position] = item;
+        setPolygons(items);
+        setHistory((prevHistory) => [...prevHistory, items]);
       } else {
-        // If no point is clicked, add a new point
-        item.data.push({ x: clickPositionX, y: clickPositionY });
+        const object = {
+          id: selectedObject,
+          data: [
+            {
+              x: clickPositionX,
+              y: clickPositionY,
+            },
+          ],
+          selectedLabel: selectedLabel,
+        };
+        setPolygons((polygons) => [...polygons, object]);
+        setHistory((prevHistory) => [...prevHistory, polygons]);
       }
-
-      items[position] = item;
-      setPolygons(items);
-      setHistory((prevHistory) => [...prevHistory, items]);
-    } else {
-      const object = {
-        id: selectedObject,
-        data: [
-          {
-            x: clickPositionX,
-            y: clickPositionY,
-          },
-        ],
-        selectedLabel: selectedLabel,
-      };
-      setPolygons((polygons) => [...polygons, object]);
-      setHistory((prevHistory) => [...prevHistory, polygons]);
     }
+    else if (selectedTool === 'bbox') {
+      setIsMouseDown(true);
+      const { x, y } = backgroundRef.current.getBoundingClientRect();
+      const { clickPositionX, clickPositionY } = getCoordinates(e, x, y);
+
+      const position = rectangles.findIndex((object) => object.id === selectedObject);
+
+      if (position !== -1) {
+        const items = [...rectangles];
+        const item = { ...items[position] };
+
+        // Calculate width and height based on mouse movement
+        const width = clickPositionX - item.x;
+        const height = clickPositionY - item.y;
+
+        // Update the rectangle dimensions
+        item.width = width;
+        item.height = height;
+
+        items[position] = item;
+        setRectangles(items);
+        setHistory((prevHistory) => [...prevHistory, items]);
+      } else {
+        const object = {
+          id: selectedObject,
+          x: clickPositionX,
+          y: clickPositionY,
+          width: 0,
+          height: 0,
+          selectedLabel: selectedLabel,
+        };
+        setRectangles((rectangles) => [...rectangles, object]);
+        setHistory((prevHistory) => [...prevHistory, rectangles]);
+      }
+    }
+  else{
+    return;
+  }
   }
   
   function handleMouseMove(e) {
@@ -230,8 +264,10 @@ const Showcase = ({ selectedTool }) => {
                         key={index}
                         cx={coordinate.x}
                         cy={coordinate.y}
-                        r="5"
-                        fill="blue"
+                        r="6"
+                        fill="rgba(255, 255, 255, 0.3)"
+                        stroke = "#333"
+                        stroke-width ="1"
 
                       />
                     ))}
@@ -239,12 +275,27 @@ const Showcase = ({ selectedTool }) => {
                   </g>
                 ))}
               </g>
+              
+              <g>
+          {rectangles.map((item) => (
+            <rect
+              key={item.id}
+              x={item.x}
+              y={item.y}
+              width={item.width}
+              height={item.height}
+              fill="transparent"
+              stroke="#333"
+              strokeWidth="2"
+            />
+          ))}
+        </g>
             </svg>
           </div>
           {selectedObject != null ? (
             <button onClick={finishAnnotation}>Finish Annotation</button>
           ) : (
-            <button onClick={newAnnotation}>New Annotation</button>
+            <button onClick={newAnnotation} >New Annotation</button>
           )}
           <button onClick={undoAnnotation}>Undo</button>
           <button onClick={redoAnnotation}>Redo</button>
@@ -320,8 +371,8 @@ left: 0;
 }
 
 .polygon {
-fill: rgba(255, 0, 0, 0.1);
-stroke: red;
+fill: rgba(148, 74, 242, 0.1);
+stroke: #944AF2;
 cursor: crosshair;
 stroke-width: 1;
 }

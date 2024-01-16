@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BboxIcon, Ploygun, HandelIcon, Clean, Undo, Redo, TextIcon, PlusIcon, MiusIcon } from './Icons';
+import { BboxIcon, Ploygun, HandelIcon, Clean, Undo, Redo, TextIcon, PlusIcon, MiusIcon } from '../Common/Icons';
 
 function Toolbar({ onSelectTool }) {
   

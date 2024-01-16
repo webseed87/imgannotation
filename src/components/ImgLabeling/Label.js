@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EyeIcon, EyeClose, Arrowdown, Arrowup, Folder, SmallClean, LockOpen, LockIcon } from './Icons';
+import { EyeIcon, EyeClose, Arrowdown, Arrowup, Folder, SmallClean, LockOpen, LockIcon, UserLine } from '../Common/Icons';
 
 const Labelpice = ["부품1", "부품2", "부품3", "부품4", "부품5", "부품6", "부품7", "부품8", "부품9", "부품10", "부품11", "부품12", "부품13", "부품14", "부품15", "부품16", "부품17", "부품18", "부품19", "부품20", "부품21"];
 const Labeldamage = ["손상1", "손상2", "손상3", "손상4", "손상5"];

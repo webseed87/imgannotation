@@ -2,10 +2,20 @@
 
 *{
 box-sizing: border-box;
+
 }
 
 button{
+display: flex;
+padding: 8px 12px;
+justify-content: center;
+align-items: center;
+gap: 8px;
 cursor: pointer;
+border-radius: 4px;
+background: #944AF2;
+color: #fff;
+border: none;
 }
 input[type="text"],input[type="password"]{
 border: 1px solid #E3E2EB;
@@ -14,7 +24,48 @@ background: #FFF;
 padding: 16px 10px;
 width: 100%;
 }
+/* 체크 박스 기본 커스텀 */
+input[type="checkbox"] {
+display: none;
+}
+input[type="checkbox"] + label {
+position: relative;
+padding-left: 20px; 
+cursor: pointer;
+display: flex;
+align-items: center;
+}
+input[type="checkbox"] + label::before {
+content: '';
+position: absolute;
+left: 0;
+top: 5px;
+width: 16px;
+height: 16px;
+border: 1px solid #E3E2EB;
+background-color: #fff;
+border-radius: 4px;
+transition: background-color 0.3s;
 
+}
+input[type="checkbox"] + label::after {
+content: '\2713'; 
+position: absolute;
+left: 2px; 
+top: 5px; 
+color: #fff; 
+font-size: 16px; 
+opacity: 0;
+font-weight:500;
+transition: opacity 0.6s;
+}
+input[type="checkbox"]:checked + label::before {
+background-color: #944AF2;
+border-color: #944AF2;
+}
+input[type="checkbox"]:checked + label::after {
+opacity: 1;
+}
 input::placeholder {
 color: #B0AEBC;
 }
@@ -375,6 +426,7 @@ flex-direction: row;
 padding: 0 20px;
 align-items: center;
 height: 60px;
+min-width: 1636px;
 justify-content: space-between;
 }
 .Topbar .UserName{
@@ -415,27 +467,27 @@ margin-left: 8px;
 display: block;
 }
 .LeftMenu ul.Mainmenu{
-    display: flex;
-    width: 240px;
-    border-bottom:1px solid #ccc;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding:20px 0
-    }
+display: flex;
+width: 240px;
+border-bottom:1px solid #ccc;
+flex-direction: column;
+flex-wrap: wrap;
+padding:20px 0
+}
 .contianer{
 display: flex;
 }
 .LeftMenu ul.Mainmenu  li{
-    width: 240px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
+width: 240px;
+padding-bottom: 20px;
+box-sizing: border-box;
 }
 
 .LeftMenu ul.Mainmenu .Submenu {
-    flex-direction: column;
-    flex-wrap: wrap;
-    display: flex;
-    width: 240px;
+flex-direction: column;
+flex-wrap: wrap;
+display: flex;
+width: 240px;
 }
 .LeftMenu ul.Mainmenu .Submenu li{
 width: 240px;
@@ -443,16 +495,16 @@ padding: 12px 20px;
 display: flex;
 }
 .LeftMenu ul.Mainmenu .Submenu li a{
-    color:  #77758A;
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    line-height: 130%;
-    text-decoration: none;
-    display: flex;
+color:  #77758A;
+font-family: Pretendard;
+font-size: 13px;
+font-style: normal;
+line-height: 130%;
+text-decoration: none;
+display: flex;
 }
 .LeftMenu ul.Mainmenu .Submenu li span{
- margin-left: 8px;   
+margin-left: 8px;   
 }
 .LeftMenu ul.Mainmenu .Submenu li:first-child{
 color:  #9291A1;
@@ -461,9 +513,287 @@ line-height: 130%;
 padding: 4px 20px;
 }
 .LeftMenu ul.Mainmenu .Submenu li.Active {
-    background-color: #EADBFC;
+background-color: #EADBFC;
 }
 .LeftMenu ul.Mainmenu .Submenu li.Active a{
-    color: #393847;
-    font-weight: 500;
+color: #393847;
+font-weight: 500;
 }
+
+.Administration{
+width: 100%;
+padding: 12px;
+}
+.Administration h3{
+display: flex;
+width: 100%;
+color: var(--text-primary, #393847);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 130%; 
+height: 74px;
+align-items: center;
+}
+.Administration .Topspace{
+margin-top: 12px;
+width: 100%;
+display: flex;
+justify-content: space-between;
+}
+.Administration  .Serchbar {
+display: flex;
+}
+.Administration  .Serchbar select{
+display: flex;
+height: 32px;
+padding: 7px 12px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 4px;
+border-radius: 4px;
+border: 1px solid var(--control-border, #E3E2EB);
+background: var(--control-background, #FFF);
+}
+.Administration  .Serchbar  select option{
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: 130%; 
+}
+.Administration  .Serchbar input[type="search"]{
+height: 32px;
+width: 220px;
+margin-left: 8px;
+border-radius: 4px;
+border: 1px solid #E3E2EB;
+}
+
+.Administration .AdminTable table{
+margin-top: 12px;
+width: 100%;
+border: 1px solid  #E3E2EB;
+border-radius: 4px;
+display: flex;
+flex-wrap: wrap;
+}
+.Administration .AdminTable table thead{
+background: #EFEFF5;
+}
+.Administration .AdminTable table tr {
+display: flex;
+height: 50px;
+align-items: center;
+border-bottom:1px solid #E3E2EB;
+}
+.Administration .AdminTable table tr:last-child {
+border-bottom:none;
+}
+
+.Administration .AdminTable table thead, 
+.Administration .AdminTable table tbody{
+width: 100%;
+}
+.Administration .AdminTable table th{
+color: var(--text-color, #22222B);
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: 130%;
+}
+.Administration .AdminTable table td{
+color: var(--text-color, #22222B);
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 130%; /* 18.2px */
+}
+.Administration .AdminTable table th,.Administration .AdminTable table td {
+margin: 8px 20px;
+max-width: 1656px;
+display: flex;
+width: 7.29%;
+min-width: 100px;
+}   
+.Administration .AdminTable table th:last-child,.Administration .AdminTable table td:last-child{
+width:24.21%;
+min-width: 410px;
+}
+
+.Administration .AdminTable .Admin span {
+color: #B22222;
+font-size: 12px;
+border-radius: 14px;
+background: #FFE8E8;
+display: flex;
+height: 28px;
+padding: 8px 12px;
+justify-content: center;
+align-items: center;
+margin-left: 4px;
+}
+.Administration .AdminTable .Labeler span {
+color: #1F3F92;
+font-size: 12px;
+border-radius: 14px;
+background: #EBF2F9;
+display: flex;
+height: 28px;
+padding: 8px 12px;
+justify-content: center;
+align-items: center;
+margin-left: 4px;
+}
+.Administration .AdminTable .Manager span {
+color:#1F9254;
+font-size: 12px;
+border-radius: 14px;
+background: #EBF9F1;
+display: flex;
+height: 28px;
+padding: 8px 12px;
+justify-content: center;
+align-items: center;
+margin-left: 4px;
+}   
+
+.Administration .AdminTable .Customer span {
+color:#92341F;
+font-size: 12px;
+border-radius: 14px;
+background: #F9F8EB;
+display: flex;
+height: 28px;
+padding: 8px 12px;
+justify-content: center;
+align-items: center;
+margin-left: 4px;
+}    
+
+.Administration .AdminTable .Authority{
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-right: 4px;
+}
+.Administration .AdminTable .Authority > div{
+margin-right: 10px;
+}
+.ml8{
+margin-left: 8px;
+}
+.Administration  .topSerach{
+background-color: transparent;
+position: relative;
+left: -40px;
+}
+
+.ManagementSection {
+width: 100%;
+padding: 12px;
+}
+.ManagementSection .TopMenu{
+display: flex;
+justify-content: space-between;
+height: 74px;
+align-items: center;
+}
+.ManagementSection h3 {
+display: flex;
+color: var(--text-primary, #393847);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 130%;
+
+}
+.ManagementSection .dataWarp{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ManagementSection .dataTable{
+width: 47%;
+min-width: 780px;
+}
+.ManagementSection .UserTable{
+    width: 47%;
+    min-width: 780px;
+    }
+.ManagementSection table{
+margin-top: 12px;
+width: 100%;
+border: 1px solid  #E3E2EB;
+border-radius: 4px;
+display: flex;
+flex-wrap: wrap;
+}
+.ManagementSection  table thead{
+background: #EFEFF5;
+}
+.ManagementSection table tr {
+display: flex;
+height: 50px;
+align-items: center;
+border-bottom:1px solid #E3E2EB;
+}
+.ManagementSection  table tr:last-child {
+border-bottom:none;
+}
+
+.ManagementSection table thead, 
+.ManagementSection  table tbody{
+width: 100%;
+}
+.ManagementSection  table th{
+color: var(--text-color, #22222B);
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: 130%;
+}
+.ManagementSection  table td{
+color: var(--text-color, #22222B);
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 130%; /* 18.2px */
+}
+.ManagementSection table th,.ManagementSection table td {
+margin: 8px 30px;
+display: flex;
+width:16.67%;
+min-width: 100px;
+}   
+
+
+
+.ManagementSection input[type="checkbox"] + label::before {
+    position: relative;
+    top: 0;
+}
+
+.ManagementSection input[type="checkbox"] + label::after {
+    position: absolute;
+    left: 22px;
+    top: 1px;
+}
+
+.ManagementSection .RightkIcon{
+    display: flex;
+    justify-content: center;
+}
+
+.ManagementSection .UserTable table th,.ManagementSection .UserTable table td {
+    margin: 8px 30px;
+    display: flex;
+    width: 20.51%;
+    min-width: 100px;
+    }   
+    
+    

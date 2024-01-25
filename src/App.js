@@ -5,7 +5,8 @@ import 'reset-css';
 import Login from './components/Login/Login';
 import Administration from './components/Administration/AdminLayout'; 
 import ImgLabeling from './components/ImgLabeling/LabelingLayout'; 
-
+import Management from './components/ManagementSection/ManagementLayout'; 
+import ResultInspection from './components/ManagementSection/ResultLayout'; 
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Administration" element={<Administration />} />
         <Route path="/ImgLabeling" element={<ImgLabeling/>} />
-
+        <Route path="/Management" element={<Management/>} />
+        <Route path="/ResultInspection" element={<ResultInspection/>} />
       </Routes>
 
     </div>

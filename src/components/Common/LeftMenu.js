@@ -20,8 +20,8 @@ return(
             <ul className="Submenu">
                 <li>Annotation Labeing</li>
                 <li className={location.pathname === '/ImgLabeling' ? 'Active' : ''}><Link to="/ImgLabeling"><SubmenuIconb /><span>레이블링 화면</span></Link></li>
-                <li><SubmenuIconc /><span>레이블링 업무 할당</span></li>
-                <li><SubmenuIcond /><span>레이블링 결과 검수</span></li>
+                <li  className={location.pathname === '/Management' ? 'Active' : ''}><Link to="/Management"><SubmenuIconc /><span>레이블링 업무 할당</span></Link></li>
+                <li  className={location.pathname === '/ResultInspection' ? 'Active' : ''}><Link to="/ResultInspection"><SubmenuIcond /><span>레이블링 결과 검수</span></Link></li>
             </ul>
 
             </li>

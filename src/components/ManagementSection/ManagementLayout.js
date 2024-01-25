@@ -1,18 +1,18 @@
 import React from 'react';
 import Topbar from '../Common/Topbar';
 import LeftMenu from '../Common/LeftMenu';
-import Administration from './Administration';
+import Management from './Management';
 
-function AdminLayout() {
+function ManagementLayout() {
     return (
 <div>
 <Topbar />
 <div className="contianer">
 <LeftMenu />
-< Administration />
+<Management />
 </div>
 </div>
     )
 }
 
-export default AdminLayout;
+export default ManagementLayout;

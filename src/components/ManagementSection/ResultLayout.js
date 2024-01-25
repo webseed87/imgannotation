@@ -1,18 +1,18 @@
 import React from 'react';
 import Topbar from '../Common/Topbar';
 import LeftMenu from '../Common/LeftMenu';
-import Administration from './Administration';
+import ResultInspection from './ResultInspection';
 
-function AdminLayout() {
+function ResultLayout() {
     return (
 <div>
 <Topbar />
 <div className="contianer">
 <LeftMenu />
-< Administration />
+<ResultInspection />
 </div>
 </div>
     )
 }
 
-export default AdminLayout;
+export default ResultLayout;

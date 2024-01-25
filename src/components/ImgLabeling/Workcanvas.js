@@ -29,7 +29,6 @@ const Showcase = ({ selectedTool }) => {
     );
   }
   function startDraw(e) {
-
     if (selectedTool == 'polygon' ) {
       setIsMouseDown(true);
       const { x, y } = backgroundRef.current.getBoundingClientRect();

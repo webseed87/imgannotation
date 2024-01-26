@@ -2,16 +2,18 @@ import React , { useState }from 'react';
 import { useNavigate } from 'react-router-dom';
 import {RunwayLogo, UserLine,Envelope, Phone } from '../Common/Icons';
 
-function Login() {
-  const navigate = useNavigate();
+function Login({ onLoginSuccess }) {
+  const [error, setError] = useState('');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
   const handleLogin = () => {
+
     if (userId === 'admin' && password === '1111') {
-      navigate('/administration');
+      onLoginSuccess(); 
+      navigate('/Administration'); 
     } else {
-      alert('아이디랑 패스워드가 틀립니다');
+      setError('아이디랑 패스워드가 틀립니다');
     }
   };
 

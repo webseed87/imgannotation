@@ -122,7 +122,7 @@ function Administration() {
                                 <td>{user.issueDate}</td>
                                 <td>{user.expiryDate}</td>
                                 <td>{user.lastAccessDate}</td>
-                                <td><Modfiy /><span className='ml8'></span><Delete /></td>
+                                <td><Modfiy /><Delete /></td>
                                 <td>
                                     <div className='Authority'>
                                         <div className='Admin'>

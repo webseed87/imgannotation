@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import './App.css';
+// import './App.css';
+import './assets/Main.scss'; 
 import 'reset-css';
 import Topbar from './components/Common/Topbar';
 import LeftMenu from './components/Common/LeftMenu';
@@ -22,14 +23,14 @@ function App() {
     <div className="App">
 
         <Topbar />
-        <div className="container">
-        <LeftMenu />
+      
  
           {showLogin ? (
             <Login onLoginSuccess={handleLoginSuccess} />
           ) : (
           
-        
+            <div className="container">
+            <LeftMenu />
               <div >
               <Routes>
               <Route path="/Administration" element={<Administration />} />
@@ -40,10 +41,10 @@ function App() {
                 <Route path="/ApiReuslt" element={<ApiReuslt />} />
       
               </Routes>
-           
+              </div>
             </div>
           )}
-        </div>
+        
       </div>
 
   );

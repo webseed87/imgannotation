@@ -1,0 +1,1024 @@
+@import url('./fonts/font.css');
+
+$primary-bg-color: #FAFAFE;
+$basic-boder-color: #E3E2EB;
+$text-primary-color: #393847;
+$pholder-text-color: #B0AEBC;
+$button-primary-color: #944AF2;
+$primary-white-color: #ffffff;
+$text-secondary-color: #77758A;
+$title-bg-color: #EFEFF5;
+
+@mixin flexcenterStyles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flexcolwarp {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+@mixin buttonPrimary {
+  background-color: $button-primary-color;
+  color: $primary-white-color;
+}
+
+@mixin flexbetweenStyles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ 
+@mixin titleText{
+    display: flex;
+    color: $text-primary-color;
+    font-size: 24px;
+    font-weight: 700;
+    height: 50px;
+    padding: 12px 0;
+    align-items: center;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 130%;
+}
+
+.container {
+  display: flex;
+  width: 1920px;
+}
+
+input::placeholder {
+  color: $pholder-text-color;
+}
+
+button {
+  @include flexcenterStyles;
+  background-color: $button-primary-color;
+  color: $primary-white-color;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  gap: 4px;
+}
+
+input[type=text],
+input[type=password] {
+  border: 1px solid $basic-boder-color;
+  border-radius: 10px;
+  background: #FFF;
+  padding: 16px 10px;
+  width: 100%;
+}
+
+
+/* 체크 박스 기본 커스텀 */
+input[type="checkbox"] {
+  display: none;
+  }
+  input[type="checkbox"] + label {
+  position: relative;
+  padding-left: 20px; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  }
+  input[type="checkbox"] + label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #E3E2EB;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  
+  }
+  input[type="checkbox"] + label::after {
+  content: '\2713'; 
+  position: absolute;
+  left: 2px; 
+  top: 2px; 
+  color: #fff; 
+  font-size: 16px; 
+  opacity: 0;
+  font-weight:500;
+  transition: opacity 0.6s;
+  }
+  input[type="checkbox"]:checked + label::before {
+  background-color: #944AF2;
+  border-color: #944AF2;
+  }
+  input[type="checkbox"]:checked + label::after {
+  opacity: 1;
+  }
+
+// 로그인 화면
+.Login {
+  width: 100%;
+  height: 100vh;
+  background-color: #f5f5f5;
+  margin: 0 auto;
+  position: relative;
+
+  .LoginForm {
+    @include flexcenterStyles;
+    flex-direction: column;
+    height: 90vh;
+
+    ul.LogoImg {
+      width: 400px;
+      @include flexbetweenStyles;
+    }
+
+    ul.Input {
+      width: 400px;
+      margin-top: 50px;
+
+      li:first-child {
+        margin-bottom: 10px;
+      }
+    }
+
+    button {
+      border-radius: 10px;
+      @include buttonPrimary;
+      padding: 16px 10px;
+      width: 100%;
+      display: block;
+      border: none;
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 50px;
+    }
+  }
+
+  .Bottomuserinfo {
+    position: absolute;
+    right: 80px;
+    bottom: 80px;
+
+    ul {
+      display: flex;
+
+      li {
+        margin-right: 10px;
+        color: #666;
+        display: flex;
+        line-height: 16px;
+
+        span {
+          margin-right: 8px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+// 메뉴 탑 부분
+.Topbar {
+  @include flexbetweenStyles;
+  border-bottom: 1px solid $basic-boder-color;
+  padding: 0 20px;
+  height: 60px;
+
+  .UserName {
+    display: flex;
+
+    span {
+      line-height: 18px;
+      font-size: 14px;
+      margin-left: 8px;
+      color: $text-secondary-color;
+    }
+  }
+}
+
+// 왼쪽 메뉴
+.LeftMenu {
+  @include flexcolwarp;
+  height: calc(100vh - 60px);
+  background-color: $primary-bg-color;
+  width: 240px;
+
+  ul.Makinarocks {
+    display: flex;
+    height: 74px;
+    width: 240px;
+    border-bottom: 1px solid #ccc;
+
+    li {
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: $text-secondary-color;
+
+      span {
+        margin-left: 8px;
+        display: block;
+      }
+    }
+  }
+
+  ul.Mainmenu {
+    @include flexcolwarp;
+    width: 240px;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
+
+    li {
+      width: 240px;
+      padding-bottom: 20px;
+      box-sizing: border-box;
+
+      .Submenu {
+        @include flexcolwarp;
+        width: 240px;
+
+        li {
+          width: 240px;
+          padding: 12px 20px;
+          display: flex;
+
+          a {
+            color: $text-secondary-color;
+            font-family: Pretendard;
+            font-size: 13px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+          }
+
+          span {
+            margin-left: 8px;
+          }
+        }
+
+        li:first-child {
+          color: #9291A1;
+          font-size: 11px;
+          padding: 4px 20px;
+        }
+
+        li.Active {
+          background-color: #EADBFC;
+
+          a {
+            color: $text-primary-color;
+            font-weight: 500;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 계정관리
+.Administration {
+  width: 100%;
+  padding: 12px;
+
+  h3 {
+    width: 100%;
+    @include titleText;
+
+  }
+
+  .Topspace {
+    margin-top: 12px;
+    width: 100%;
+    @include flexbetweenStyles;
+
+    .topSerach{
+      background: transparent;
+      position: relative;
+      left: -40px;
+    }
+  }
+
+  .Serchbar {
+    display: flex;
+    padding: 12px 0;
+    select {
+      @include flexcenterStyles;
+      height: 32px;
+      padding: 7px 12px;
+      flex-direction: column;
+      gap: 4px;
+      border-radius: 4px;
+      border: 1px solid $basic-boder-color;
+      background: $primary-white-color;
+
+      option {
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+      }
+    }
+
+    input[type=search] {
+      height: 32px;
+      width: 220px;
+      margin-left: 8px;
+      border-radius: 4px;
+      border: 1px solid $basic-boder-color;
+    }
+  }
+
+  .AdminTable {
+    table {
+      margin-top: 12px;
+      width: 100%;
+      border: 1px solid $basic-boder-color;
+      border-radius: 4px;
+      display: flex;
+      flex-wrap: wrap;
+
+      thead,
+      tbody {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      thead {
+        background: $title-bg-color;
+      }
+
+      tr {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        border-bottom: 1px solid $basic-boder-color;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      th,
+      td {
+        margin: 8px 20px;
+        display: flex;
+        width: 7.29%;
+        min-width: 100px;
+
+        &:last-child {
+          width: 24.21%;
+          min-width: 410px;
+        }
+
+        span {
+          @include flexcenterStyles;
+          font-size: 12px;
+          border-radius: 14px;
+          height: 28px;
+          padding: 8px 12px;
+          margin-left: 4px;
+        }
+      }
+
+      th {
+        color: var(--text-color, #22222B);
+        font-family: Pretendard;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 700;
+      }
+
+      td {
+        color: var(--text-color, #22222B);
+        font-family: Pretendard;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        gap: 4px;
+      }
+    }
+
+    .Admin span {
+      color: #B22222;
+      background: #FFE8E8;
+    }
+
+    .Labeler span {
+      color: #1F3F92;
+      background: #EBF2F9;
+    }
+
+    .Manager span {
+      color: #1F9254;
+      background: #EBF9F1;
+    }
+
+    .Customer span {
+      color: #92341F;
+      background: #F9F8EB;
+    }
+
+    .Authority {
+      @include flexbetweenStyles;
+      padding-right: 4px;
+
+      >div {
+        margin-right: 10px;
+      }
+    }
+
+    .ml8 {
+      margin-left: 8px;
+    }
+
+    .topSerach {
+      background-color: transparent;
+      position: relative;
+      left: -40px;
+    }
+  }
+}
+
+// 어노테이션 화면
+.MenuWarp {
+  display: flex;
+}
+
+.Workspace {
+  display: flex;
+  width: 1680px;
+  position: relative;
+  flex-wrap: wrap;
+
+
+  .Topinfo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 74px;
+    padding: 0 12px;
+
+    .Userinfo {
+      display: flex;
+      align-items: center;
+
+      h3 {
+        @include titleText;
+      }
+    }
+
+    .Userinfo select {
+      display: flex;
+      margin-left: 12px;
+      width: 200px;
+      height: 32px;
+      padding: 7px 12px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      border-radius: 4px;
+      border: 1px solid var(--control-border, $basic-boder-color);
+      background: var(--control-background, #FFF);
+
+      option {
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+        /* 16.9px */
+      }
+    }
+
+    .Dateinfo {
+      display: flex;
+      align-items: center;
+
+      span {
+        font-family: 'Pretendard-Regular';
+        color: $text-secondary-color;
+        font-feature-settings: 'clig' off, 'liga' off;
+        font-family: Pretendard;
+        font-size: 13px;
+        display: inline-block;
+
+        &.time {
+          color: #22222B;
+          font-size: 13px;
+          display: inline-block;
+        }
+      }
+
+      .Save {
+        @include flexcenterStyles;
+        height: 32px;
+        min-width: 64px;
+        padding: 0px 12px;
+        gap: 4px;
+        border-radius: 4px;
+        border: 1px solid var(--button-primary-background, #944AF2);
+        background: var(--button-primary-background, #944AF2);
+        color: #fff;
+        margin-left: 12px;
+      }
+    }
+  }
+}
+
+.Toolbar {
+  margin: 12px 0 12px 12px;
+  background: $title-bg-color;
+  display: flex;
+  width: 60px;
+  height: 100%;
+  padding: 12px 0px;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 279px);
+  border-left: 1px solid $basic-boder-color;
+  border-top: 1px solid $basic-boder-color;
+  border-bottom: 1px solid $basic-boder-color;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 12px;
+  }
+
+  ul li {
+    display: flex;
+    padding: 12px;
+    cursor: pointer;
+  }
+}
+
+.Workcanvas {
+  width: calc(100% - 480px);
+  margin-top: 12px;
+  height: calc(100vh - 279px);
+  border: 1px solid $basic-boder-color;
+
+  h4 {
+    display: flex;
+    border-top: 1px solid $title-bg-color;
+    border-bottom: 1px solid $basic-boder-color;
+    background: $title-bg-color;
+    height: 44px;
+    padding: 0px 12px;
+    align-items: center;
+    color: $text-primary-color;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Roboto;
+  }
+
+  .canvas {
+    padding: 77px 40px 40px 40px;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    .Pagenavigation {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      display: flex;
+      height: 37px;
+
+      >div:nth-child(1),
+      >div:nth-child(3) {
+        cursor: pointer;
+      }
+    }
+
+    .SlideCounter {
+      margin: 0 10px;
+      color: #22222B;
+      font-family: Pretendard;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 500;
+    }
+  }
+}
+
+.Label {
+  width: 400px;
+  margin-top: 12px;
+  font-family: Pretendard;
+  position: relative;
+  height: calc(100vh - 279px);
+  border-right: 1px solid $basic-boder-color;
+  border-top: 1px solid $basic-boder-color;
+  border-bottom: 1px solid $basic-boder-color;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  h4 {
+    display: flex;
+    background: $title-bg-color;
+    height: 44px;
+    padding: 0px 12px;
+    align-items: center;
+    color: $text-primary-color;
+    border-top-right-radius: 5px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid $basic-boder-color;
+  }
+
+  .Labeltag {
+    height: calc(100vh - 326px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: $basic-boder-color transparent;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: transparent;
+      border-left: 1px solid $basic-boder-color;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $basic-boder-color;
+      border: 2px solid $basic-boder-color;
+    }
+  }
+
+  .Labeltag ul.Menu>li {
+    @include flexbetweenStyles;
+    padding: 12px;
+    background-color: #F8F8FC;
+    border-bottom: 1px solid $basic-boder-color;
+    height: 56px;
+    color: #22222B;
+    font-size: 13px;
+    font-weight: 500;
+    width: 100%;
+
+    &:last-child {
+      border-top: none;
+    }
+
+    >div {
+      display: flex;
+    }
+  }
+
+  .Labeltag ul.Submenu>li {
+    @include flexbetweenStyles;
+    background-color: #fff;
+    color: #22222B;
+    font-family: Pretendard;
+    font-size: 13px;
+    height: 40px;
+    padding: 4px 12px 4px 20px;
+    border-bottom: 1px solid $basic-boder-color;
+
+    >div {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .Labeltag ul.Submenu li:hover {
+    background-color: rgba(244, 236, 254, 0.50);
+  }
+
+  .Labeltag ul.Submenu .Hovericon {
+    display: none;
+  }
+
+  .Labeltag ul.Submenu li:hover .Hovericon {
+    display: inline-block;
+  }
+
+  .Labeltag ul.Submenu li .Hovericon svg {
+    width: 24px;
+  }
+
+  .Labeltag ul.Submenu li .Hovericon svg:first-child {
+    margin-right: 4px;
+  }
+
+  .InactiveItemText {
+    color: #999;
+  }
+
+  .ActiveItemText {
+    color: #22222B;
+  }
+
+  .Labeltag ul.Submenu .Hovericon.Active {
+    display: inline-block;
+    position: relative;
+  }
+
+  .swiper-no-swiping {
+    pointer-events: none;
+  }
+}
+
+// 레이블링 작업할당
+.ManagementSection {
+  width: 100%;
+  padding: 0 12px;
+
+  .TopMenu {
+    @include flexbetweenStyles;
+    height: 74px;
+    width: 100%;
+  }
+
+  h3 {
+    @include titleText;
+  }
+
+  .dataWarp {
+    @include flexbetweenStyles;
+  }
+
+  .dataTable {
+    width: 47%;
+    min-width: 780px;
+  }
+
+  .UserTable {
+    width: 47%;
+    min-width: 780px;
+  }
+
+  table {
+    margin-top: 12px;
+    width: 100%;
+    border: 1px solid $basic-boder-color;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+
+    thead {
+      background: $title-bg-color;
+    }
+
+    tr {
+      display: flex;
+      height: 50px;
+      align-items: center;
+      border-bottom: 1px solid $basic-boder-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    thead,
+    tbody {
+      width: 100%;
+    }
+
+    th {
+      color: var(--text-color, #22222B);
+      font-family: Pretendard;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    td {
+      color: var(--text-color, #22222B);
+      font-family: Pretendard;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    th,
+    td {
+      margin: 8px 30px;
+      display: flex;
+      width: 16.67%;
+      min-width: 100px;
+    }
+  }
+
+  input[type="checkbox"]+label::before {
+    position: relative;
+    top: 0;
+  }
+
+  input[type="checkbox"]+label::after {
+    position: absolute;
+    left: 22px;
+    top: 1px;
+  }
+
+  .RightkIcon {
+    display: flex;
+    justify-content: center;
+  }
+
+  .UserTable table th,
+  .UserTable table td {
+    margin: 8px 30px;
+    display: flex;
+    width: 20.51%;
+    min-width: 100px;
+  }
+}
+
+.ResultWarp {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 12px;
+
+
+  .UserSeletor {
+    width: 44%;
+    margin-right: 12px;
+    min-width: 700px;
+
+    select {
+      display: flex;
+      width: 100%;
+      height: 32px;
+      padding: 7px 12px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      border-radius: 4px;
+      border: 1px solid $basic-boder-color;
+      background: #FFF;
+    }
+
+    table th,
+    table td {
+      margin: 8px 30px;
+      display: flex;
+      width: 35%;
+      min-width: 100px;
+    }
+
+    table th:last-child,
+    table td:last-child {
+      margin: 8px 0px;
+      display: flex;
+      width: 30%;
+      min-width: 100px;
+      justify-content: center;
+    }
+  }
+
+  .ImgList {
+    width: 54%;
+    max-width: 1315px;
+
+    .SwiperWarp {
+      padding: 80px 40px 40px 40px;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid $basic-boder-color;
+      background: #FFF;
+      position: relative;
+      display: flex;
+      width: 100%;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      .Pagenavigation {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        display: flex;
+        height: 37px;
+        margin-bottom: 40px;
+      }
+
+      .SlideCounter {
+        margin: 0 10px;
+        color: #22222B;
+        font-family: Pretendard;
+        font-size: 13px;
+      }
+    }
+  }
+}
+// API 테스트 호출
+.ApitestCall{
+  padding: 12px;
+  width: 100%;
+  min-width:1656px;
+  h3{
+    @include titleText;
+    width: 100%;
+
+  }
+  .TopMenu{
+    @include flexbetweenStyles;
+    width: 100%;
+    margin-top:12px;
+    padding: 12px 0;
+    select {
+      @include flexcenterStyles;
+      width: 400px;
+      height: 32px;
+      padding: 7px 12px;
+      flex-direction: column;
+      gap: 4px;
+      border-radius: 4px;
+      border: 1px solid $basic-boder-color;
+      background: $primary-white-color;
+
+      option {
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+      }
+
+      button {
+        gap: 4px;
+        display: flex;
+      }
+  }
+  }
+  .ImgUpload{
+    margin: 12px 0;
+    border: 1px solid $basic-boder-color;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    .Title{
+      background-color:#EFEFF5;
+      height: 50px;
+      border-top-left-radius:4px;
+      border-top-right-radius:4px;
+      @include flexbetweenStyles;
+      padding: 12px;
+      button{
+        background-color: transparent;
+      }
+    }
+
+    .Imgwarp{
+      padding: 40px;
+    }
+  }
+  .tab-buttons {
+    display: flex;
+  }
+  
+  .tab-buttons button {
+    padding: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #B0AEBC;
+    border-radius: 0;
+  }
+  
+  .tab-buttons button.active {
+    color: $button-primary-color;
+    font-weight: 700px;
+    border-bottom: 2px solid $button-primary-color;
+  }
+  
+  .tab-content {
+    margin-top: 10px;
+  }
+  .tab-content textarea{
+    border-radius: 4px;
+    border: 1px solid $basic-boder-color;
+    width: 100%;
+    height: 80px;
+  }
+}
+

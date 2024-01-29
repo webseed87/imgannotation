@@ -103,7 +103,6 @@ function ResultInspection() {
       };
     useEffect(() => {
         if (swiper) {
-          // Update totalSlides when the number of slides changes
           swiper.on('observerUpdate', () => {
             setTotalSlides(swiper.slides.length);
           });
